@@ -1,12 +1,15 @@
 <template>
     <div id="app">
-        <h1>My first project in Vue.</h1>
+        <h1>Calculator</h1>
+        <Calculator></Calculator>
     </div>
 </template>
 
 <script>
+import Calculator from '../src/main/Calculator.vue'
+
 export default {
-    
+    components: {Calculator}
 }
 </script>
 
