@@ -32,9 +32,13 @@ export default {
 </script>
 
 <style>
+:root{
+    --width-calculator: 250px;
+    --height-calculator: 300px;
+}
 .calculator{
-    width: 250px;
-    height: 300px;
+    width: var(--width-calculator);
+    height: var(--height-calculator);
     display: grid;
     border-radius: 5px;
     overflow: hidden;

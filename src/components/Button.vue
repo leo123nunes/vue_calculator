@@ -7,17 +7,24 @@
 <script>
 export default {
   props: {
-    label: String,
-    operation: Boolean,
-    double: Boolean,
-    triple: Boolean
+    label: {},
+    operation: {type: Boolean},
+    double: {type: Boolean},
+    triple: {type: Boolean}
   }
 }
 </script>
 
 <style>
+:root{
+  --background-button: #ebebeb;
+  --background-button-operation: #ff641c;
+  --backgroundhover-button: #bdbdbd;
+  --backgroundhover-button-operation: #af4716;
+}
+
 button.button{
-  background-color: rgb(235, 235, 235);
+  background-color: var(--background-button);
   padding: 0px;
   border: 1px solid #bdbdbd;
   border-left: none;
@@ -27,7 +34,7 @@ button.button{
 }
 
 button.button:hover{
-  background-color: #bdbdbd;
+  background-color: var(--backgroundhover-button);
   text-decoration: none;
   outline: none;
 }
@@ -41,12 +48,12 @@ button.triple{
 }
 
 button.operation{
-  background-color: rgb(255, 100, 28);
+  background-color: var(--background-button-operation);
   color: #fff;
 }
 
 button.operation:hover{
-  background-color: rgb(175, 71, 22);
+  background-color: var(--backgroundhover-button-operation);
 }
 
 button.button:active{
