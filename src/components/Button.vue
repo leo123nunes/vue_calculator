@@ -30,7 +30,7 @@ button.button{
   border-left: none;
   border-top: none;
   color: rgb(0, 0, 0);
-  font-size: 20px;
+  font-size: 1.5em;
 }
 
 button.button:hover{

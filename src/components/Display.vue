@@ -1,15 +1,25 @@
 <template>
   <div class="display">
-      Display area
+      {{value}}
   </div>
 </template>
 
 <script>
 export default {
-
+  props: ['value']
 }
 </script>
 
 <style>
-
+.display{
+  grid-column: span 4;
+  background-color: rgb(59, 59, 59);
+  color: #fff;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 20px;
+  font-size: 2em;
+  overflow: hidden;
+}
 </style>
