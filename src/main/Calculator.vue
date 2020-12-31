@@ -1,6 +1,6 @@
 <template>
     <div class="calculator">
-        <Display value="1000"></Display>
+        <Display :value="displayValue"></Display>
         <Button label="AC" triple @onCalcButtonClick="clearMemory"></Button>
         <Button label="/" operation @onCalcButtonClick="setOperation"></Button>
         <Button label="7" @onCalcButtonClick="addDigit"></Button>
@@ -27,20 +27,106 @@ import Button from '../components/Button.vue'
 import Display from '../components/Display.vue'
 
 export default {
+    data: function(){
+        return {
+            values: [0,0],
+            current: 0,
+            displayValue: "0",
+            operation: null,
+            clearDisplay: true
+        }
+    },
 
     components: {Button, Display},
 
     methods: {
         addDigit(digit){
-            console.log(`digit ${digit} has been added`)
+
+            if(digit == '.'){
+                if(this.displayValue.toString().includes('.')){
+                    return
+                }
+            }
+
+            if(this.displayValue == '0'){
+                if(digit == '0'){
+                    return
+                }
+            }
+
+            if(this.clearDisplay && digit != '.'){
+                this.displayValue = ""
+                this.clearDisplay = false
+            }
+
+            
+            this.displayValue += digit
+            this.clearDisplay = false
+            this.values[this.current] = parseFloat(this.displayValue)
         },
 
         clearMemory(){
-            console.log('clean memory')
+            this.values = [0,0],
+            this.current = 0,
+            this.displayValue = "0",
+            this.operation = null,
+            this.clearDisplay = true
         },
-        
+
         setOperation(operation){
-            console.log(`the operation ${operation} has been set`)
+            var lastOperation = this.operation
+            this.operation = operation
+            this.current = 1
+            this.clearDisplay = true
+            var result = 0
+
+            if(operation == '='){      
+                try{
+                    this.operation = lastOperation
+                    result = eval(`${this.values[0]} ${this.operation} ${this.values[1]}`)
+                    
+                    if(result.toString().length > 11){
+                        result = parseFloat(result.toString().slice(0,11))
+                    }
+
+                    this.operation = null
+                   
+                    if((this.values[0] == 0 || this.values[1] == 0) && lastOperation == '/'){
+                        this.displayValue = 0
+                        this.values[0] = null
+                        this.values[1] = null
+                        return
+                    }else{
+                        this.displayValue = result
+                        this.values[0] = result
+                        this.values[1] = null
+                        return
+                    }
+                }catch(e){
+                    return
+                }
+            }
+
+            if(lastOperation){
+                result = eval(`${this.values[0]} ${lastOperation} ${this.values[1]}`)
+                
+                if(result.toString().length > 11){
+                        result = parseFloat(result.toString().slice(0,11))
+                    }
+                
+                if(!isNaN(result)){
+                    this.displayValue = result
+                    this.values[0] = result
+                    this.values[1] = null 
+                    return  
+                }
+                if(this.values[1] == 0){
+                    this.displayValue = 0
+                    this.values[0] = null
+                    this.values[1] = null
+                }
+                return
+            }  
         }
     }
 }
